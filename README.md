@@ -4,6 +4,54 @@
 
 **AlexaActionAssistant** simplifies and automates the setup of Alexa Skills for Home Assistant, allowing for easy creation of actionable notifications. It builds upon the [alexa-actions](https://github.com/keatontaylor/alexa-actions) project, providing additional features such as automatic skill creation and configuration generation using PowerShell scripts. 
 
+## Example Use Cases
+
+**Morning Routine** <br><br>
+Alexa: "Good morning! Would you like me to start your morning routine?"
+  
+You: "Yes"
+  
+Alexa: "Starting morning routine: turning on kitchen lights, brewing coffee, and playing the news."<br><br>
+
+**Evening Lights**<br><br>
+Alexa: "It's getting dark outside. Would you like me to turn on the living room lights?"
+  
+You: "Yes"
+  
+Alexa: "Turning on living room lights."<br><br>
+
+**Movie Mode**<br><br>
+Alexa: "Are you ready for movie night? Shall I set the living room lights to movie mode?"
+  
+You: "Yes"
+  
+Alexa: "Setting living room lights to movie mode."<br><br>
+
+**Radio Station**<br><br>
+Alexa: "What radio station would you like to listen to?"
+
+You: "Planet Rock"
+
+Alexa: "Tuning in to Planet Rock."<br><br>
+
+**Temperature Adjustment**<br><br>
+Alexa: "The temperature in the living room is 23°C. Would you like me to adjust the thermostat?"
+  
+You: "Lower it by two degrees."
+  
+Alexa: "Setting thermostat to 21°C."<br><br>
+
+**Bedtime**<br><br>
+Alexa: "It's getting late. Shall I prepare the house for bedtime?"
+
+You: "Yes"
+
+Alexa: "Locking doors, turning off lights, and setting alarm."<br><br>
+
+Remember, these are just examples. With **AlexaActionAssistant**, you can tailor your responses to fit your personal preferences and automate any routine within your smart home setup.
+
+
+
 ## Prerequisites
 
 Before starting with **AlexaActionAssistant**, ensure you have the following:
