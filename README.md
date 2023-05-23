@@ -1,5 +1,11 @@
 # AlexaActionAssistant
 
+☕ Found my content helpful?<br>
+All funds will go towards improving and developing future content.
+
+[Buy me a coffee!](https://www.buymeacoffee.com/hassassistant)
+
+
 ## Description
 
 **AlexaActionAssistant** simplifies and automates the setup of Alexa Skills for Home Assistant, allowing for easy creation of actionable notifications. It builds upon the [alexa-actions](https://github.com/keatontaylor/alexa-actions) project, providing additional features such as automatic skill creation and configuration generation using PowerShell scripts. 
