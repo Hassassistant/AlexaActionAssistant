@@ -3,6 +3,18 @@ $scriptsPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $installScriptsPath = Join-Path -Path $scriptsPath -ChildPath 'Install'  # point to the 'Install' subdirectory
 $configScriptsPath = Join-Path -Path $scriptsPath -ChildPath 'Config'  # point to the 'Config' subdirectory
 
+# Check if scripts exist
+$installScriptPath = Join-Path -Path $installScriptsPath -ChildPath 'ask-install.ps1'
+$configScriptPath = Join-Path -Path $configScriptsPath -ChildPath 'ask.ps1'
+if (-not (Test-Path -Path $installScriptPath)) {
+    Write-Error "Install script does not exist at path: $installScriptPath"
+    exit 1
+}
+if (-not (Test-Path -Path $configScriptPath)) {
+    Write-Error "Config script does not exist at path: $configScriptPath"
+    exit 1
+}
+
 # Get the ID and security principal of the current user account
 $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
 $myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
@@ -27,15 +39,22 @@ if ($myWindowsPrincipal.IsInRole($adminRole)) {
 }
 
 # Run install scripts
-$installScripts = @("ask-install.ps1")
-foreach ($script in $installScripts) {
-    & "$installScriptsPath\$script"
-    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE } # if error occurred in script, stop the process
+try {
+    & $installScriptPath
+    if (-not $?) { throw "Install script failed" }
+} catch {
+    Write-Error $_.Exception.Message
+    exit 1
 }
 
 # Run ask.ps1
-& "$configScriptsPath\ask.ps1"
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+try {
+    & $configScriptPath
+    if (-not $?) { throw "Config script failed" }
+} catch {
+    Write-Error $_.Exception.Message
+    exit 1
+}
 
 # Pause before commiting new changes
 Write-Host "Please wait while skill is being built..."
