@@ -2,6 +2,16 @@
 $scriptsPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $installScriptsPath = Join-Path -Path $scriptsPath -ChildPath 'Install'  # point to the 'Install' subdirectory
 
+# Check if scripts exist
+$installScripts = @("node-install.ps1", "git-install.ps1")
+foreach ($script in $installScripts) {
+    $scriptPath = Join-Path -Path $installScriptsPath -ChildPath $script
+    if (-not (Test-Path -Path $scriptPath)) {
+        Write-Error "Install script does not exist at path: $scriptPath"
+        exit 1
+    }
+}
+
 # Get the ID and security principal of the current user account
 $myWindowsID=[System.Security.Principal.WindowsIdentity]::GetCurrent()
 $myWindowsPrincipal=new-object System.Security.Principal.WindowsPrincipal($myWindowsID)
@@ -26,9 +36,13 @@ if ($myWindowsPrincipal.IsInRole($adminRole)) {
 }
 
 # Run install scripts
-$installScripts = @("node-install.ps1", "git-install.ps1")
 foreach ($script in $installScripts) {
-    & "$installScriptsPath\$script"
-    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE } # if error occurred in script, stop the process
+    $scriptPath = Join-Path -Path $installScriptsPath -ChildPath $script
+    try {
+        & $scriptPath
+        if (-not $?) { throw "$script failed" }
+    } catch {
+        Write-Error $_.Exception.Message
+        exit 1
+    }
 }
-
